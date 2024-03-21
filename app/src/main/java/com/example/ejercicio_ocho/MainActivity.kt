@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
-        rcv.adapter = Adapter()
+        rcv.adapter = Adapter(this)
         rcv.layoutManager = LinearLayoutManager(this)
     }
 
@@ -41,4 +41,11 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, AddActivity::class.java)
         startActivity(intent)
     }
+
+    fun clickItem(posicion: Int) {
+        val intent = Intent(this, EditarActivity::class.java)
+        intent.putExtra("pocision", posicion)
+        startActivity(intent)
+    }
+
 }

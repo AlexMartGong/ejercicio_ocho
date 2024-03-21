@@ -7,7 +7,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.RecyclerView
 
-class Adapter : RecyclerView.Adapter<Adapter.ViewHolderConcat>() {
+class Adapter (private var mainActivity: MainActivity)
+    : RecyclerView.Adapter<Adapter.ViewHolderConcat>() {
 
     //Parte interna
     class ViewHolderConcat(item: View) : RecyclerView.ViewHolder(item) {
@@ -27,6 +28,9 @@ class Adapter : RecyclerView.Adapter<Adapter.ViewHolderConcat>() {
         val contact = ProvicionalData.listContact[position]
         holder.txtName.text = contact.name
         holder.txtPhoneNumber.text = contact.phoneNumber
+        holder.itemView.setOnClickListener {
+            mainActivity.clickItem(position)
+        }
     }
 
 }
