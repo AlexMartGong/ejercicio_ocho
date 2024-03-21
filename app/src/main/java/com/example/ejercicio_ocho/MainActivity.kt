@@ -10,7 +10,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,9 +41,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun clickItem(posicion: Int) {
-        val intent = Intent(this, EditarActivity::class.java)
-        intent.putExtra("pocision", posicion)
+    fun clickItem(position: Int) {
+        val intent = Intent(this, EditActivity::class.java)
+        intent.putExtra("position", position)
         startActivity(intent)
     }
 

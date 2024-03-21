@@ -6,14 +6,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
-class EditarActivity : AppCompatActivity() {
+class EditActivity : AppCompatActivity() {
 
-    var posicion: Int = 0
+    var position: Int = 0
     lateinit var txtName: EditText
     lateinit var txtPhoneNumber: EditText
 
@@ -22,19 +19,19 @@ class EditarActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add)
         val txtTitle = findViewById<TextView>(R.id.txtTitle)
         txtTitle.text = "Modificar Contacto"
-        posicion = intent.getIntExtra("pocision", -1)
-        Log.e("Contactos", "Se recibio un ${posicion}")
+        position = intent.getIntExtra("position", -1)
+        Log.e("Contact", "Se recibio un ${position}")
         txtName = findViewById(R.id.txtName)
         txtPhoneNumber = findViewById(R.id.txtPhoneNomber)
 
-        val contact = ProvicionalData.listContact[posicion]
+        val contact = ProvicionalData.listContact[position]
         txtName.setText(contact.name)
         txtPhoneNumber.setText(contact.phoneNumber)
 
     }
     fun save(v: View) {
         val contact = Contact(txtName.text.toString(), txtPhoneNumber.text.toString())
-        ProvicionalData.listContact.set(posicion, contact)
+        ProvicionalData.listContact.set(position, contact)
         Toast.makeText(this, "Se modifico", Toast.LENGTH_LONG).show()
         finish()
     }
