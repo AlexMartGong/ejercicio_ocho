@@ -10,6 +10,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Array
+import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +35,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        val fileHandling = FileHandling(this)
+        val jsonContent = fileHandling.readFile()
+        val gson = Gson()
+        val type = object : TypeToken<ArrayList<Contact>> () {}.type
+        ProvicionalData.listContact = gson.fromJson(jsonContent, type)
+
         Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
         rcv.adapter = Adapter(this)
         rcv.layoutManager = LinearLayoutManager(this)

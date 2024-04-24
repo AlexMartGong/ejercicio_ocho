@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 
 class EditActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
         val txtTitle = findViewById<TextView>(R.id.txtTitle)
-        txtTitle.text = "Modificar Contacto"
+        txtTitle.text = "Modify contact"
         position = intent.getIntExtra("position", -1)
         Log.e("Contact", "Se recibio un ${position}")
         txtName = findViewById(R.id.txtName)
@@ -31,8 +32,17 @@ class EditActivity : AppCompatActivity() {
     }
     fun save(v: View) {
         val contact = Contact(txtName.text.toString(), txtPhoneNumber.text.toString())
-        ProvicionalData.listContact.set(position, contact)
-        Toast.makeText(this, "Se modifico", Toast.LENGTH_LONG).show()
+        ProvicionalData.listContact[position] = contact
+
+        val json = Gson()
+        val jsonContent = json.toJson(ProvicionalData.listContact)
+
+        val fileHandling = FileHandling(this)
+        val result = fileHandling.save(jsonContent)
+
+        val msg = if (result) "Save" else "Error"
+
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
         finish()
     }
 }
