@@ -31,6 +31,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        val db = openOrCreateDatabase("my_database", MODE_PRIVATE, null)
+        db.execSQL("CREATE TABLE IF NOT EXISTS contacts(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, phone TEXT NOT NULL)")
+
+        val cursor = db.rawQuery("SELECT * FROM contacts", null)
+        val contacts = ArrayList<Contact>()
+
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(0)
+            val name = cursor.getString(1)
+            val phone = cursor.getString(2)
+            val contact = Contact(name, phone)
+
+            contacts.add(contact)
+        }
+
         Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
         rcv.adapter = Adapter(this)
         rcv.layoutManager = LinearLayoutManager(this)

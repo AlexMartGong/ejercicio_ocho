@@ -24,6 +24,9 @@ class AddActivity : AppCompatActivity() {
         val name = findViewById<EditText>(R.id.txtName)
         val phoneNumber = findViewById<EditText>(R.id.txtPhoneNomber)
         val contact = Contact(name.text.toString(), phoneNumber.text.toString())
+
+
+
         ProvicionalData.listContact.add(contact)
         Toast.makeText(this, "Save", Toast.LENGTH_LONG).show()
         finish()
