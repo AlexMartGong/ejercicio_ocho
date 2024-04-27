@@ -1,5 +1,6 @@
 package com.example.ejercicio_ocho
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -22,13 +23,19 @@ class AddActivity : AppCompatActivity() {
     }
     fun save(v: View){
         val name = findViewById<EditText>(R.id.txtName)
-        val phoneNumber = findViewById<EditText>(R.id.txtPhoneNomber)
-        val contact = Contact(name.text.toString(), phoneNumber.text.toString())
+        val phone = findViewById<EditText>(R.id.txtPhoneNomber)
 
+        val db = openOrCreateDatabase("my_database", MODE_PRIVATE, null)
+        val parameter = ContentValues()
+        parameter.put("name", name.text.toString())
+        parameter.put("phone", phone.text.toString())
+        db.insert("contacts", null, parameter)
 
-
+        val contact = Contact(name.text.toString(), phone.text.toString())
         ProvicionalData.listContact.add(contact)
+
         Toast.makeText(this, "Save", Toast.LENGTH_LONG).show()
+        db.close()
         finish()
     }
 }

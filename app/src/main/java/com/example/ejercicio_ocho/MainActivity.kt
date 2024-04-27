@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
             contacts.add(contact)
         }
 
+        ProvicionalData.listContact = contacts
+
         Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
         rcv.adapter = Adapter(this)
         rcv.layoutManager = LinearLayoutManager(this)
