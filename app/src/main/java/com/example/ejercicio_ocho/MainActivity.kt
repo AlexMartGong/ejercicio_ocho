@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +32,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        ProvicionalData.listContact.clear()
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "contactDB")
+            .allowMainThreadQueries().build()
+        val consult = db.contactDao().getAll()
+
+        consult.forEach { contact -> ProvicionalData.listContact.add(contact) }
+
         Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
         rcv.adapter = Adapter(this)
         rcv.layoutManager = LinearLayoutManager(this)

@@ -5,4 +5,5 @@
     <string name="txtInput_name">Agregar un nombre</string>
     <string name="txtinput_telefono">Agregar Telefono</string>
     <string name="btn_guardar">Guardar</string>
+    <string name="calcel">Cancelar</string>
 </resources>

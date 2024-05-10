@@ -27,7 +27,7 @@ class Adapter (private var mainActivity: MainActivity)
     override fun onBindViewHolder(holder: ViewHolderConcat, position: Int) {
         val contact = ProvicionalData.listContact[position]
         holder.txtName.text = contact.name
-        holder.txtPhoneNumber.text = contact.phoneNumber
+        holder.txtPhoneNumber.text = contact.phone
         holder.itemView.setOnClickListener {
             mainActivity.clickItem(position)
         }
