@@ -1,3 +1,7 @@
 package com.example.ejercicio_ocho
 
-data class Contact (val name: String, val phoneNumber: String)
+data class Contact (
+    val id: Int,
+    val name: String,
+    val phone: String
+)

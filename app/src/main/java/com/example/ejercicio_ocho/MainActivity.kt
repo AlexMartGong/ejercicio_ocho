@@ -10,6 +10,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,9 +34,34 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
-        rcv.adapter = Adapter(this)
-        rcv.layoutManager = LinearLayoutManager(this)
+
+        val repository = RetrofitApp.getRetrofit()
+        val service = repository.create(IContact::class.java)
+        val petition: Call<List<Contact>> = service.getPersonas()
+
+        petition.enqueue(object : Callback<List<Contact>> {
+            override fun onResponse(call: Call<List<Contact>>, response: Response<List<Contact>>) {
+                val contacts = response.body()
+                Log.v("Respuesta", "Numero de registros ${contacts?.size}")
+                if (contacts != null) {
+                    ProvicionalData.listContact = contacts as ArrayList<Contact>
+                    Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
+                    rcv.adapter = Adapter(this@MainActivity)
+                    rcv.layoutManager = LinearLayoutManager(this@MainActivity)
+                }
+            }
+
+            override fun onFailure(call: Call<List<Contact>>, t: Throwable) {
+                Log.e("Error", t.message.toString())
+            }
+
+        })
+        /*
+                Log.w("Contact", "Hay ${ProvicionalData.listContact.size} register contact")
+                rcv.adapter = Adapter(this)
+                rcv.layoutManager = LinearLayoutManager(this)
+         */
+
     }
 
     fun btnAdd(v: View) {
