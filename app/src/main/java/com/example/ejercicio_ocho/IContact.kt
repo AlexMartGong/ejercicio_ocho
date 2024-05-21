@@ -7,8 +7,8 @@ import retrofit2.http.HTTP
 import retrofit2.http.PUT
 
 interface IContact {
-    companion object{
-        const val url = "http://192.168.3.4:4567"
+    companion object {
+        const val url = "http://10.1.2.35:4567"
     }
 
     @GET("/contacts")
